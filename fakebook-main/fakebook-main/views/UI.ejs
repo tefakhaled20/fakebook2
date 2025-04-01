@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Social Feed</title>
+    <%- include('../includes/header') %>
+    <link rel="stylesheet" href="styles/UI.css">
+    <script src="/scripts/likes-logic.js" defer></script>
+</head>
+<body>
+    <!-- Create Post Form -->
+    <form action="/UI?_csrf=<%= locals.csrfToken %>" method="post" id="post-bar">
+        <nav class="UI">
+            <section class="search-bar">
+                <img src="<%= userdata.imagePath %>" alt="<%= userdata.username %>">
+                <input type="text" name="content" id="search-bar" placeholder="What's on your mind?">
+            </section>
+        </nav>
+    </form>
+
+    <!-- Main Content Layout -->
+    <div class="content-layout">
+        <!-- Left Sidebar -->
+        <aside class="sidebar left-sidebar">
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <svg viewBox="0 0 24 24" class="nav-icon">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="/profile/:id" class="nav-item">
+                    <svg viewBox="0 0 24 24" class="nav-icon">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>Profile</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <svg viewBox="0 0 24 24" class="nav-icon">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" fill="none" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>Saved</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <svg viewBox="0 0 24 24" class="nav-icon">
+                        <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" fill="none" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Feed -->
+        <main class="main-feed">
+            <% for(const post of posts) { %>
+                <article class="post">
+                    <div class="post-header">
+                        <div class="post-user">
+                            <img src="<%= post.imagePath %>" alt="<%= post.username %>" class="post-avatar">
+                            <div class="post-user-info">
+                                <h3 class="post-username"><%= post.username %></h3>
+                                <span class="post-time"><%= post.timestamp.toLocaleString() %></span>
+                            </div>
+                        </div>
+                        <button class="post-menu">
+                            <svg viewBox="0 0 24 24" class="menu-icon">
+                                <circle cx="12" cy="12" r="1" fill="currentColor"/>
+                                <circle cx="19" cy="12" r="1" fill="currentColor"/>
+                                <circle cx="5" cy="12" r="1" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="post-content">
+                        <%= post.content %>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-button likebutton" data-post-id="<%= post._id %>" data-csrf="<%= csrfToken %>">
+                            <svg viewBox="0 0 24 24" class="action-icon">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="none" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            <span class="likeCount">
+                                <%= post.likeCount > 999 ? 
+                                    (post.likeCount < 1000000 ? 
+                                        (post.likeCount/1000).toFixed(1) + 'K' : 
+                                        (post.likeCount/1000000).toFixed(1) + 'M') : 
+                                    post.likeCount %>
+                            </span>
+                        </button>
+                        <button class="action-button">
+                            <svg viewBox="0 0 24 24" class="action-icon">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="none" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            <span>Comment</span>
+                        </button>
+                        <button class="action-button">
+                            <svg viewBox="0 0 24 24" class="action-icon">
+                                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <polyline points="16 6 12 2 8 6" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <line x1="12" y1="2" x2="12" y2="15" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </article>
+            <% } %>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="sidebar right-sidebar">
+            <div class="suggestions-card">
+                <h3>Suggested for you</h3>
+                <div class="suggestion-list">
+                    <div class="suggestion-item">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e" alt="Suggested user" class="suggestion-avatar">
+                        <div class="suggestion-info">
+                            <span class="suggestion-name">John Doe</span>
+                            <span class="suggestion-meta">Followed by Sarah</span>
+                        </div>
+                        <button class="follow-button">Follow</button>
+                    </div>
+                    <div class="suggestion-item">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" alt="Suggested user" class="suggestion-avatar">
+                        <div class="suggestion-info">
+                            <span class="suggestion-name">Jane Smith</span>
+                            <span class="suggestion-meta">Followed by Mike</span>
+                        </div>
+                        <button class="follow-button">Follow</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<link rel="stylesheet" href="/styles/header.css">
+<header class="header">
+  <div class="container">
+    <nav class="nav">
+      <a id="logo"href="/UI">Fakebook</a>
+      
+      <div class="search-container">
+
+        <svg id="search-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
+          <path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z"></path>
+          </svg>
+          <input type="search" id="search-input" placeholder="Search for friends">
+  
+      </div>
+      
+
+      <div class="buttons">
+        <% if(locals.isAuth) { %>
+          <form action="/logout" method="POST" id="logout">
+            <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+            <button class="btn">Logout</button>
+          </form>
+         
+         <% } %>  
+         <% if (!locals.isAuth) { %>
+          <a href="/login"><button class="btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" y1="12" x2="3" y2="12"></line>
+            </svg>
+            LogIn</button></a> 
+          <a href="/signup"><button class="btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7" r="4"></circle>
+              <line x1="20" y1="8" x2="20" y2="14"></line>
+              <line x1="23" y1="11" x2="17" y2="11"></line>
+            </svg>
+            SignUp</button></a>
+          <% } %>
+      </div>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,176 @@
+
+<head>
+  <%- include('../includes/header') %>
+<link rel="stylesheet" href="/styles/signup.css">
+<script  src="/scripts/image-preview.js" defer></script>
+
+</head>
+<body>
+
+ 
+  <main class="main-content">
+    <div class="form-container">
+      <div class="form-header">
+        <h1 class="form-title">Create your account</h1>
+        <p class="form-subtitle">Join our community of developers</p>
+      </div>
+
+      <form action="/signup?_csrf=<%= locals.csrfToken %>" method="post" enctype="multipart/form-data" >
+        <div class="avatar-upload">
+          <div class="avatar-preview">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <img id="avatar-img"  alt="Profile avatar">
+          </div>
+          <div class="avatar-controls">
+            <h3 class="avatar-title">Profile picture</h3>
+            <p class="avatar-description">Upload a profile picture to personalize your account</p>
+            <div class="file-input-container">
+              <input type="file" id="avatar" name="image" class="file-input" accept="image/*" >
+              <label for="avatar" class="file-input-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                Upload image
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label for="firstname" class="form-label">First name</label>
+              <input type="text" id="first-name" name="firstname" class="form-input"  placeholder="John" required>
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label for="lastname" class="form-label">Last name</label>
+              <input type="text" id="last-name" name="lastname" class="form-input"  placeholder="Doe" required>
+            </div>
+          </div>
+        </div>
+        <div class="location-section">
+          <div class="location-header">
+            <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <h3 class="location-title">Location Information</h3>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-col">
+              <div class="form-group">
+                <label for="city" class="form-label">City</label>
+                <input type="text" id="city" name="city" class="form-input"  placeholder="San Francisco">
+              </div>
+            </div>
+            <div class="form-col">
+              <div class="form-group">
+                <label for="country" class="form-label">Country</label>
+                <select id="country" name="country" class="form-input">
+                  <option value="" disabled selected>Select your country</option>
+                  <option value="us">United States</option>
+                  <option value="ca">Canada</option>
+                  <option value="uk">United Kingdom</option>
+                  <option value="au">Australia</option>
+                  <option value="in">India</option>
+                  <option value="de">Germany</option>
+                  <option value="fr">France</option>
+                  <option value="jp">Japan</option>
+                  <option value="br">Brazil</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" id="email" name="email" class="form-input"  placeholder="you@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" id="username" name="username" class="form-input"  placeholder="johndoe" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" name="password" id="password" class="form-input" placeholder="••••••••" required>
+          <div class="password-requirements">
+            <p>Password must contain:</p>
+            <div class="requirement">
+              <svg class="requirement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>At least 8 characters</span>
+            </div>
+            <div class="requirement">
+              <svg class="requirement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>At least one uppercase letter</span>
+            </div>
+            <div class="requirement">
+              <svg class="requirement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>At least one number</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirm-password" class="form-label">Confirm password</label>
+          <input type="password" name="confirm-password" id="confirm-password" class="form-input" placeholder="••••••••" required>
+        </div>
+
+
+        <div class="form-footer">
+          <div class="checkbox-container">
+            <input type="checkbox" id="terms" class="checkbox" required>
+            <label for="terms" class="checkbox-label">
+              I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary submit-btn">Create account</button>
+
+        <div class="divider">
+          <div class="divider-line"></div>
+          <span class="divider-text">Or sign up with</span>
+          <div class="divider-line"></div>
+        </div>
+
+        <div class="social-login">
+          <button type="button" class="btn social-btn">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg>
+            Facebook
+          </button>
+          <button type="button" class="btn social-btn">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+              <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+            </svg>
+            Google
+          </button>
+        </div>
+
+        <p class="login-prompt">
+          Already have an account? <a href="/login" class="login-link">Sign in</a>
+        </p>
+      </form>
+    </div>
+  </main>
